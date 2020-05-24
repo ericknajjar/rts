@@ -8,11 +8,8 @@ namespace rts.selection.view
 {
     public class DragView : MonoInstaller, IDragView
     {
-
-        void Start()
-        {
-
-        }
+        [SerializeField] Canvas _selectionCanvas;
+        [SerializeField] RectTransform _selectionAreaPrefab;
 
         public override void InstallBindings()
         {
@@ -21,20 +18,34 @@ namespace rts.selection.view
 
         public IDragArea CreateDragArea(Vector2 begin, IObservable<Vector2> end)
         {
-            return new DragArea(begin,end.TakeUntilDestroy(this));
+            RectTransform go = GameObject.Instantiate<RectTransform>(_selectionAreaPrefab, _selectionCanvas.transform);
+
+            return new DragArea(begin,end.TakeUntilDestroy(go), go);
         }
 
         class DragArea : IDragArea
+
         {
-            public DragArea(Vector2 begin, IObservable<Vector2> end)
+            RectTransform _rectTransform;
+
+            public DragArea(Vector2 begin, IObservable<Vector2> end, RectTransform rectTransform)
             {
-                end.Subscribe(_ => Debug.Log(_));
+                _rectTransform = rectTransform;
+
+                end.Subscribe(endPosition => 
+                {
+             
+                    var rect = ScreenUtils.PointsToRect(begin, endPosition);
+
+                    rectTransform.anchoredPosition = rect.position;
+
+                    rectTransform.sizeDelta = rect.size;
+                });
             }
         
-
             public void Kill()
             {
-                Debug.Log("morri");
+               GameObject.Destroy(_rectTransform.gameObject);
             }
         }
     }

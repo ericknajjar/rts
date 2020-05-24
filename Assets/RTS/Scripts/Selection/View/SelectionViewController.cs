@@ -25,9 +25,7 @@ namespace rts.selection.view
         {
             _inputService.Drag.TakeUntilDestroy(this).SelectMany( ev =>
             {
-
                 var dragArea = _dragView.CreateDragArea(ev.Begin, ev.End);
-
                 return ev.Done.Select(_ => dragArea);
 
             }).Subscribe(dragArea => 

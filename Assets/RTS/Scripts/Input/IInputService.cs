@@ -8,8 +8,8 @@ namespace rts.input
 {
     public interface IInputService
     {
-        IObservable<Unit> MainInputAction { get; }
-        IObservable<Unit> SecondaryInputAction { get; }
+        IObservable<Vector2> MainInputAction { get; }
+        IObservable<Vector2> SecondaryInputAction { get; }
 
         IObservable<IDragEvent> Drag {get;}
 

@@ -9,9 +9,9 @@ namespace rts.input
  
         public Vector2 Begin { get; }
 
-        public IObservable<Vector2> End { get;  }
+        public IReadOnlyReactiveProperty<Vector2> End { get; }
 
-        public DragEvent(Vector2 begin, IObservable<Vector2> end, IObservable<Unit> done)
+        public DragEvent(Vector2 begin, IReadOnlyReactiveProperty<Vector2> end, IObservable<Unit> done)
         {
             Begin = begin;
             End = end;
@@ -26,7 +26,7 @@ namespace rts.input
     public interface IDragEvent
     {
         Vector2 Begin { get; }
-        IObservable<Vector2> End { get; }
+        IReadOnlyReactiveProperty<Vector2> End { get; }
         IObservable<Unit> Done { get; }
     }
 }
