@@ -1,0 +1,7 @@
+
+* Unidades
+* Seleção
+* Tarefas
+* Lista de Tarefas
+* Construções
+* Selecionavel
